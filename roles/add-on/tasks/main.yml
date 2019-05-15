@@ -35,10 +35,18 @@
   when: update_version
   
 - name: remove crontab
-  command: sudo crontab -r
-  when: update_version
-  
+  command: crontab -r
+  when: update_version  
+
 # Install Add-ons
+- name: Mount screen folder
+  mount:
+    path: /var/www/html/extension/screen
+    src: tmpfs
+    fstype: tmpfs
+    opts: nodev,nosuid,size=10M
+    state: mounted
+
 - name: Install packages
   apt:
     name: "{{ packages }}"
@@ -104,6 +112,3 @@
     owner: www-data
     group: www-data
     mode: 0644
-    
-- name: Run a screenshot.sh
-  script: /usr/bin/screenshot.sh
