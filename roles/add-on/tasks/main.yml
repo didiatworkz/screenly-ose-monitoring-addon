@@ -35,7 +35,7 @@
   when: update_version
   
 - name: remove crontab
-    command: sudo crontab -r
+  command: sudo crontab -r
   when: update_version
   
 # Install Add-ons
