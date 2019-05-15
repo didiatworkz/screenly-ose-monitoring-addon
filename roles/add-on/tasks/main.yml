@@ -15,9 +15,8 @@
 - name: Remove old screenshot script
   file:
     state: absent
-    path: "{{ file_list }}"
-  vars:
-    file_list:
+    path: "{{ item }}"
+  with_items:
     - /home/pi/screenshot.sh
     - /home/pi/screenshot.log
     - /var/www/html/screen/
