@@ -40,7 +40,7 @@
 # Install Add-ons
 - name: Mount screen folder
   mount:
-    path: /var/www/html/extension/screen
+    path: /var/www/html/addon/screen
     src: tmpfs
     fstype: tmpfs
     opts: nodev,nosuid,size=10M
@@ -57,10 +57,10 @@
     - x11-apps 
     - imagemagick
     
-- name: Copy extension.conf
+- name: Copy addon.conf
   copy:
-    src: extension.conf
-    dest: /etc/nginx/sites-enabled/extension.conf
+    src: addon.conf
+    dest: /etc/nginx/sites-enabled/addon.conf
     owner: root 
     group: root
     mode: 0644
@@ -82,7 +82,7 @@
     job: "sleep 20 && /usr/bin/screenshot.sh >> /var/log/screenshot.log 2>1"
 
 - file:
-    path: /var/www/html/extension
+    path: /var/www/html/addon
     state: directory
     owner: www-data
     group: www-data
@@ -91,7 +91,7 @@
 - name: Copy index.html
   copy:
     src: index.html
-    dest: /var/www/html/extension/index.html
+    dest: /var/www/html/addon/index.html
     owner: www-data
     group: www-data
     mode: 0644
@@ -99,7 +99,7 @@
 - name: Copy monitor.txt
   copy:
     src: monitor.txt
-    dest: /var/www/html/extension/monitor.txt
+    dest: /var/www/html/addon/monitor.txt
     owner: www-data
     group: www-data
     mode: 0644
@@ -107,7 +107,7 @@
 - name: Copy loading image
   copy:
     src: loading.png
-    dest: /var/www/html/extension/loading.png
+    dest: /var/www/html/addon/loading.png
     owner: www-data
     group: www-data
     mode: 0644
