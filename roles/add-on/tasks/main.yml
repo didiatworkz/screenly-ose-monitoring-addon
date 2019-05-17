@@ -43,7 +43,7 @@
     path: /var/www/html/addon/screen
     src: tmpfs
     fstype: tmpfs
-    opts: nodev,nosuid,size=10M
+    opts: nodev,nosuid,size=50M
     state: mounted
 
 - name: Install packages
