@@ -40,7 +40,7 @@
     - nginx
     - x11-apps
     - imagemagick
-  when: update_version or raspi2pngNot
+  when: update_version or not raspi2pngNot
 
 - name: remove crontab
   command: crontab -r
