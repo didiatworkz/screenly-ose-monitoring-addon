@@ -1,5 +1,5 @@
 # Check older versions
-    
+
 - set_fact: update_version="False"
 
 - name: check if older version installed
@@ -7,7 +7,14 @@
     path: /etc/nginx/sites-enabled/screenshot.conf
   register: oldVersion_s
 
+- name: check if older version installed v2
+  stat:
+    path: /usr/bin/raspi2png
+  register: raspi2png_s
+
 - set_fact: old_version="{{oldVersion_s.stat.exists}}"
+
+- set_fact: raspi2pngNot="{{raspi2png_s.stat.exists}}"
 
 - set_fact: update_version="True"
   when: old_version
@@ -23,7 +30,7 @@
     - /home/pi/screenshot.sh
     - /etc/nginx/sites-enabled/screenshot.conf
   when: update_version
-  
+
 - name: Remove old packages
   apt:
     name: "{{ packages }}"
@@ -31,11 +38,13 @@
   vars:
     packages:
     - nginx
-  when: update_version
-  
+    - x11-apps
+    - imagemagick
+  when: update_version or raspi2pngNot
+
 - name: remove crontab
   command: crontab -r
-  when: update_version  
+  when: update_version
 
 # Install Add-ons
 - name: Mount screen folder
@@ -43,7 +52,7 @@
     path: /var/www/html/addon/screen
     src: tmpfs
     fstype: tmpfs
-    opts: nodev,nosuid,size=50M
+    opts: nodev,nosuid,size=25M
     state: mounted
 
 - name: Install packages
@@ -53,28 +62,36 @@
     update_cache: yes
   vars:
     packages:
-    - nginx-light 
-    - x11-apps 
-    - imagemagick
-    
+    - nginx-light
+    - libpng12-dev
+
+- name: Copy raspi2png
+  copy:
+    src: raspi2png
+    dest: /tmp/raspi2png
+
+- name: Build raspi2png
+  make:
+    chdir: /tmp/raspi2png
+
 - name: Copy addon.conf
   copy:
     src: addon.conf
     dest: /etc/nginx/sites-enabled/addon.conf
-    owner: root 
+    owner: root
     group: root
     mode: 0644
   notify:
     - restart-nginx
-    
+
 - name: Copy screenshot.sh
   copy:
     src: screenshot.sh
     dest: /usr/bin/screenshot.sh
-    owner: pi 
+    owner: pi
     group: pi
     mode: 0755
-    
+
 - name: Crontab for screenshot.sh
   cron:
     name: "Crontab for screenshot.sh"
@@ -87,7 +104,7 @@
     owner: www-data
     group: www-data
     recurse: yes
-    
+
 - name: Copy index.html
   copy:
     src: index.html
