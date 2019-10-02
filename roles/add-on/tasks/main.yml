@@ -68,7 +68,7 @@
 - name: Copy raspi2png
   copy:
     src: raspi2png
-    dest: /tmp/raspi2png
+    dest: /tmp
 
 - name: Build raspi2png
   make:
