@@ -74,6 +74,12 @@
   make:
     chdir: /tmp/raspi2png
 
+- name: Run 'install' target as root
+  make:
+    chdir: /tmp/raspi2png
+    target: install
+  become: yes
+
 - name: Copy addon.conf
   copy:
     src: addon.conf
