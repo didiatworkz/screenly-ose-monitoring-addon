@@ -51,6 +51,7 @@
 - name: remove crontab
   command: crontab -r
   when: not raspi2pngNot
+  ignore_errors: yes
 
 # START INSTALL
 - name: Mount screen folder
