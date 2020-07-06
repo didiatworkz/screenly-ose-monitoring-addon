@@ -6,6 +6,7 @@ _BRANCH=v2.0
 
 
 header() {
+tput setaf 172
 cat << "EOF"
                             _
    ____                    | |
@@ -20,6 +21,7 @@ echo
 echo "Screenly OSE Monitor Add-on (SOMA)"
 echo
 echo
+tput sgr 0
 }
 
 clear
