@@ -45,7 +45,6 @@ else
   echo -e "[ \e[93mYES\e[39m ] Screenly installed"
 fi
 
-header
 echo "The installation can may be take a while.."
 echo
 echo
