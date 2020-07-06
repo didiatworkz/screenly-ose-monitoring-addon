@@ -116,7 +116,6 @@
     mode: 0644
   with_items:
     - monitor-output.py
-    - capture-output.sh
     - booting.png
     - error.png
 
