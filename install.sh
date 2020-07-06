@@ -1,5 +1,10 @@
 #!/bin/bash
 # Created by didiatworkz
+
+_BRANCH=v2.0
+#_BRANCH=master
+
+
 header() {
 clear
 cat << "EOF"
@@ -24,9 +29,18 @@ sleep 2
 
 if [ ! -e /home/pi/screenly/server.py ]
 then
-	echo
-	echo "No ScreenlyOSE found!"
-	exit
+  echo -e "[ \e[32mNO\e[39m ] Screenly installed"
+  echo -e "[ \e[93mYES\e[39m ] Standalone Installation"
+  sudo mkdir -p /etc/ansible
+  echo -e "[local]\nlocalhost ansible_connection=local" | sudo tee /etc/ansible/hosts > /dev/null
+  sudo apt update
+  sudo apt-get purge -y python-setuptools python-pip python-pyasn1 libffi-dev
+  sudo apt-get install -y python3-dev git-core libffi-dev libssl-dev
+  curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
+  sudo pip3 install ansible=="$_ANSIBLE_VERSION"
+
+else
+  echo -e "[ \e[93mYES\e[39m ] Screenly installed"
 fi
 
 header
@@ -34,8 +48,9 @@ echo "The installation can may be take a while.."
 echo
 echo
 echo
-sudo -u pi ansible localhost -m git -a  "repo=${1:-https://github.com/didiatworkz/screenly-ose-monitoring-addon.git} dest=/tmp/addon version=master"
-cd  /tmp/addon/
+sudo rm -rf /tmp/soma
+sudo git clone --branch $_BRANCH https://github.com/didiatworkz/screenly-ose-monitoring-addon.git /tmp/soma
+cd /tmp/soma
 sudo -E ansible-playbook addon.yml
 
 header
