@@ -3,6 +3,6 @@
   user: pi
   become: yes
 
-  roles:s
+  roles:
     - monitor-capture
     - device-info
