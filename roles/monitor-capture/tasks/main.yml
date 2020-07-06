@@ -42,6 +42,13 @@
     force: yes
   when: update_version
 
+- name: Remove old screenshot.sh
+  file:
+    path: /usr/bin/screenshot.sh
+    state: absent
+    force: yes
+  when: update_version
+
 - name: Remove mount screen folder
   mount:
     state: absent
@@ -103,7 +110,7 @@
 - name: Copy files
   copy:
     src: "{{ item }}"
-    dest: /home/pi/soma/monitor-output/"{{ item }}"
+    dest: /home/pi/soma/monitor-output/{{ item }}
     owner: pi
     group: pi
     mode: 0644
