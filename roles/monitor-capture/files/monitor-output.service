@@ -1,0 +1,16 @@
+[Unit]
+Description=Screenly OSE Monitoring Add-on - Monitor Output
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/pi/soma/monitor-output
+User=pi
+ExecStart=/usr/bin/python /home/pi/soma/monitor-output/monitor-output.py
+ExecStartPost=/usr/bin/bash /home/pi/soma/monitor-output/capture-output.sh
+ExecStop=/usr/bin/pkill screenshot.sh
+Restart=always
+RestartSec=5
+Environment=PYTHONPATH=/home/pi/soma/monitor-output
+
+[Install]
+WantedBy=multi-user.target

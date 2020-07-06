@@ -1,0 +1,137 @@
+# Check older versions
+
+- set_fact: update_version="False"
+
+- name: check if older version installed
+  stat:
+    path: /etc/nginx/sites-enabled/screenshot.conf
+  register: version1_s
+
+- name: check if older version installed
+  stat:
+    path: /etc/nginx/sites-enabled/addon.conf
+  register: version1-2_s
+
+- set_fact: version1="{{version1_s.stat.exists}}"
+
+- set_fact: version1-2="{{version1-2_s.stat.exists}}"
+
+- set_fact: update_version="True"
+  when: version1 OR version1-2
+
+- name: Remove old packages
+  apt:
+    name: "{{ packages }}"
+    state: absent
+  vars:
+    packages:
+    - nginx
+  when: update_version
+
+- name: Remove old nginx files
+  file:
+    path: /etc/nginx/sites-enabled/addon.conf
+    state: absent
+    force: yes
+  when: update_version
+
+- name: Remove old files
+  file:
+    path: /var/www/html/addon
+    state: absent
+    force: yes
+  when: update_version
+
+- name: Remove old files
+  file:
+    path: /var/www/html/addon
+    state: absent
+    force: yes
+  when: update_version
+
+- name: Remove mount screen folder
+  mount:
+    state: absent
+  when: update_version
+
+- name: Remove Crontab for screenshot.sh
+  cron:
+    name: "Crontab for screenshot.sh"
+    state: absent
+  when: update_version
+
+# BEGIN INSTALL
+
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packages:
+    - python3
+    - libpng12-dev
+
+- name: Install pip packages
+  pip:
+    name: flask
+
+- name: Copy raspi2png
+  copy:
+    src: raspi2png
+    dest: /tmp
+
+- name: Build raspi2png
+  make:
+    chdir: /tmp/raspi2png
+
+- name: Run 'install' target as root
+  make:
+    chdir: /tmp/raspi2png
+    target: install
+  become: yes
+
+- name: Create working dir
+  file:
+    path: /home/pi/soma/monitor-output
+    state: directory
+    owner: pi
+    group: pi
+    recurse: yes
+
+- name: Mount monitor-output tmp folder
+  mount:
+    path: /home/pi/soma/monitor-output/tmp
+    src: tmpfs
+    fstype: tmpfs
+    opts: nodev,nosuid,size=25M
+    state: mounted
+
+- name: Copy files
+  copy:
+    src: "{{ files }}"
+    dest: /home/pi/soma/monitor-output/"{{ files }}"
+    owner: pi
+    group: pi
+    mode: 0644
+  vars:
+    files:
+    - monitor-output.py
+    - capture-output.sh
+    - booting.png
+    - error.png
+
+- name: Copy monitor-output.service
+  copy:
+    src: monitor-output.service
+    dest: /etc/systemd/system/monitor-output.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart and enable monitor-output.service
+  systemd:
+    name: monitor-output
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
