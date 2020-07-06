@@ -1,0 +1,14 @@
+[Unit]
+Description=Screenly OSE Monitoring Add-on - Device Info
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/pi/soma/device-info
+User=pi
+ExecStart=/usr/bin/python /home/pi/soma/device-info/device_info.py
+Restart=always
+RestartSec=5
+Environment=PYTHONPATH=/home/pi/soma/device-info
+
+[Install]
+WantedBy=multi-user.target

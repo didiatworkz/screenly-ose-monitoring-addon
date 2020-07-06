@@ -1,0 +1,48 @@
+# BEGIN INSTALL
+
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packages:
+    - python3
+
+- name: Install pip packages
+  pip:
+    name: psutil
+
+- name: Create working dir
+  file:
+    path: /home/pi/soma/device-info
+    state: directory
+    owner: pi
+    group: pi
+    recurse: yes
+
+- name: Copy files
+  copy:
+    src: "{{ files }}"
+    dest: /home/pi/soma/device-info/"{{ files }}"
+    owner: pi
+    group: pi
+    mode: 0644
+  vars:
+    files:
+    - device-info.py
+
+- name: Copy device-info.service
+  copy:
+    src: device-info.service
+    dest: /etc/systemd/system/device-info.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart and enable device-info.service
+  systemd:
+    name: device-info
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
