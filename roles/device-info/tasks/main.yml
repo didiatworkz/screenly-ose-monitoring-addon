@@ -23,13 +23,12 @@
 
 - name: Copy files
   copy:
-    src: "{{ files }}"
-    dest: /home/pi/soma/device-info/"{{ files }}"
+    src: "{{ items }}"
+    dest: /home/pi/soma/device-info/{{ items }}
     owner: pi
     group: pi
     mode: 0644
-  vars:
-    files:
+  with_items:
     - device-info.py
 
 - name: Copy device-info.service
