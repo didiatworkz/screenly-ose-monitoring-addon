@@ -6,8 +6,6 @@ After=network-online.target
 WorkingDirectory=/home/pi/soma/monitor-output
 User=pi
 ExecStart=/usr/bin/python /home/pi/soma/monitor-output/monitor-output.py
-ExecStartPost=/bin/bash /home/pi/soma/monitor-output/capture-output.sh &
-ExecStop=/usr/bin/pkill capture-output.sh > /var/log/soma.log 2>&1
 Restart=always
 RestartSec=5
 Environment="PYTHONPATH=/home/pi/soma/monitor-output"
