@@ -133,9 +133,6 @@
   copy:
     src: monitor-output.service
     dest: /etc/systemd/system/monitor-output.service
-    owner: root
-    group: root
-    mode: 0644
 
 - name: Restart and enable monitor-output.service
   systemd:
