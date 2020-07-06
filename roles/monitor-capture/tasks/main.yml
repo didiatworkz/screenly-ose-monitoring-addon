@@ -120,6 +120,16 @@
     - booting.png
     - error.png
 
+- name: Copy files
+  copy:
+    src: "{{ item }}"
+    dest: /home/pi/soma/monitor-output/{{ item }}
+    owner: pi
+    group: pi
+    mode: 0755
+  with_items:
+    - capture-output.sh
+
 - name: Copy monitor-output.service
   copy:
     src: monitor-output.service
