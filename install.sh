@@ -6,7 +6,6 @@ _BRANCH=v2.0
 
 
 header() {
-clear
 cat << "EOF"
                             _
    ____                    | |
@@ -18,11 +17,12 @@ cat << "EOF"
 
 EOF
 echo
-echo "Screenly OSE Monitor addon"
+echo "Screenly OSE Monitor Add-on (SOMA)"
 echo
 echo
 }
 
+clear
 header
 echo "Prepair Screenly Player..."
 sleep 2
@@ -57,4 +57,4 @@ header
 echo "Screenly OSE Monitor addon successfuly installed"
 echo "Device is being restarted in 5 seconds!"
 sleep 5
-sudo reboot now
+#sudo reboot now
