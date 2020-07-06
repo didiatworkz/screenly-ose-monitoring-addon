@@ -19,32 +19,6 @@
 _VERSION="2"
 _WAIT_TIME="20"
 
-while [[ $# -gt 0 ]] ; do
-  case $1 in
-    -h|-\?|--help)
-      echo
-			echo "Screenshot Add-on for Screenly OSE Monitoring."
-      echo
-			echo "With this add-on it is possible to create a screenshot of the current "
-      echo "HDMI output and make it available at the address 0.0.0.0:9020."
-			echo
-			echo "Options: "
-			echo "  --version | Show current installed version"
-      echo
-      exit 0
-    ;;
-    -v|--version)
-			echo "$_VERSION"
-      exit 0
-    ;;
-    *)
-			echo "Invalid Option!"
-      echo "Please enter --help for more commands"
-      exit 1
-    ;;
-  esac
-done
-
 echo "Screenshot Add-on for Screenly OSE Monitoring"
 cp /home/pi/soma/monitor-output/booting.png /home/pi/soma/monitor-output/tmp/screenshot.png
 echo "wait $_WAIT_TIME sec..."
