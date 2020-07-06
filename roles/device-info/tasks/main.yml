@@ -23,8 +23,8 @@
 
 - name: Copy files
   copy:
-    src: "{{ items }}"
-    dest: /home/pi/soma/device-info/{{ items }}
+    src: "{{ item }}"
+    dest: /home/pi/soma/device-info/{{ item }}
     owner: pi
     group: pi
     mode: 0644
