@@ -10,14 +10,14 @@
 - name: check if older version installed
   stat:
     path: /etc/nginx/sites-enabled/addon.conf
-  register: version1-2_s
+  register: version1_2_s
 
 - set_fact: version1="{{version1_s.stat.exists}}"
 
-- set_fact: version1-2="{{version1-2_s.stat.exists}}"
+- set_fact: version1_2="{{version1_2_s.stat.exists}}"
 
 - set_fact: update_version="True"
-  when: version1 OR version1-2
+  when: version1 OR version1_2-2
 
 - name: Remove old packages
   apt:
