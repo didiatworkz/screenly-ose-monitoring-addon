@@ -129,6 +129,18 @@
   with_items:
     - capture-output.sh
 
+- name: Copy capture-output.service
+  copy:
+    src: capture-output.service
+    dest: /etc/systemd/system/capture-output.service
+
+- name: Restart and enable capture-output.service
+  systemd:
+    name: capture-output
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+
 - name: Copy monitor-output.service
   copy:
     src: monitor-output.service
