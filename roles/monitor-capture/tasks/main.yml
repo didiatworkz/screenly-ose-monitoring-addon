@@ -42,13 +42,6 @@
     force: yes
   when: update_version
 
-- name: Remove old files
-  file:
-    path: /var/www/html/addon
-    state: absent
-    force: yes
-  when: update_version
-
 - name: Remove mount screen folder
   mount:
     state: absent
@@ -109,13 +102,12 @@
 
 - name: Copy files
   copy:
-    src: "{{ files }}"
-    dest: /home/pi/soma/monitor-output/"{{ files }}"
+    src: "{{ item }}"
+    dest: /home/pi/soma/monitor-output/"{{ item }}"
     owner: pi
     group: pi
     mode: 0644
-  vars:
-    files:
+  with_items:
     - monitor-output.py
     - capture-output.sh
     - booting.png
