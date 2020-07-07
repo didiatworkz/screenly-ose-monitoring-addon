@@ -110,7 +110,7 @@
 - name: Copy files
   copy:
     src: monitor-output
-    dest: /home/pi/soma/monitor-output
+    dest: /home/pi/soma
     owner: pi
     group: pi
     mode: 0644
