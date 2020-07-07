@@ -29,7 +29,7 @@
     group: pi
     mode: 0644
   with_items:
-    - device-info.py
+    - info.py
 
 - name: Copy device-info.service
   copy:
