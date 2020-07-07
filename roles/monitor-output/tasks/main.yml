@@ -72,10 +72,6 @@
     - python3
     - libpng12-dev
 
-- name: Install pip packages
-  pip:
-    name: flask
-
 - name: Copy raspi2png
   copy:
     src: raspi2png
@@ -108,7 +104,17 @@
     state: mounted
 
 - name: Copy files
-  command: cp -r /tmp/soma/roles/monitor-output/files/monitor-output /home/pi/soma/monitor-output
+  copy:
+    src: monitor-output
+    dest: /home/pi/soma
+    owner: pi
+    group: pi
+    mode: 0644
+
+- name: Install requirements
+  pip:
+    requirements: /home/pi/soma/monitor-output/requirements.txt
+    virtualenv: /home/pi/soma/monitor-output/monoutenv
 
 - name: Copy monitor-output.service
   copy:
