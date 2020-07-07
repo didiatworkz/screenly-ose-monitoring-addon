@@ -108,12 +108,7 @@
     state: mounted
 
 - name: Copy files
-  copy:
-    src: monitor-output/
-    dest: /home/pi/soma
-    owner: pi
-    group: pi
-    mode: 0644
+  command: cp -r /tmp/soma/roles/monitor-output/files/monitor-output /home/pi/soma/monitor-output
 
 - name: Copy monitor-output.service
   copy:
