@@ -109,7 +109,7 @@
 
 - name: Copy files
   copy:
-    src: monitor-output
+    src: monitor-output/
     dest: /home/pi/soma
     owner: pi
     group: pi
