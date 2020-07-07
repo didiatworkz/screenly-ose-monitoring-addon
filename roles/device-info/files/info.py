@@ -29,7 +29,7 @@ app = Flask('__name__')
 
 @app.route('/')
 def home():
-    return 'Screenly OSE Monitoring - Device Info'
+    return 'Screenly OSE Monitoring Add-on - Device Info V' + _VERSION
 
 @app.route('/hostname')
 def hostname():

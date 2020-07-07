@@ -16,7 +16,7 @@
 #	________________________________________
 
 
-import os
+import subprocess
 from flask import Flask, send_file
 
 _VERSION='1.0'
@@ -28,12 +28,17 @@ app = Flask('__name__')
 #app.debug = True # Uncomment to debug
 filename = 'screenshot.png'
 
+def capture_image():
+    command = 'raspi2png --pngname /home/pi/soma/monitor-output/tmp/screenshot.png'
+    p = subprocess.Popen(command, shell=True, stderr=subprocess.PIPE)
+
 @app.route('/')
 def home():
-    return '<h1>Screenly OSE Monitoring Addon<h1><h2>Monitor Output 1.0<h2>'
+    return 'Screenly OSE Monitoring Add-on - Monitor Output V' + _VERSION
 
 @app.route('/screen/screenshot.png')
 def output():
+    capture_image()
     return send_file('/home/pi/soma/monitor-output/tmp/' + filename, mimetype='image/png')
 
 @app.route('/version')

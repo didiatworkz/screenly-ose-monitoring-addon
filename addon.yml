@@ -4,5 +4,5 @@
   become: yes
 
   roles:
-    - monitor-capture
+    - monitor-output
     - device-info
