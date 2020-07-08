@@ -29,7 +29,7 @@ app = Flask('__name__')
 filename = 'screenshot.png'
 
 def capture_image():
-    command = 'raspi2png --pngname /home/pi/soma/monitor-output/tmp/screenshot.png'
+    command = '/usr/bin/raspi2png --pngname /home/pi/soma/monitor-output/tmp/screenshot.png'
     p = subprocess.Popen(command, shell=True, stderr=subprocess.PIPE)
 
 @app.route('/')
