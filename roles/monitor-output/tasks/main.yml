@@ -18,19 +18,6 @@
 
 - set_fact: update_version="True"
   when: version1 or version1_2
-  
-- name: Clean /var/www/html/addon/screen
-  file:
-    path: /var/www/html/addon/screen/*
-    state: absent
-    force: yes
-  when: update_version
-
-- name: Unmount screen folder
-  mount:
-    path: /var/www/html/addon/screen
-    state: absent
-  when: update_version
 
 - name: Remove old packages
   apt:
@@ -62,6 +49,11 @@
     force: yes
   when: update_version
 
+- name: Remove mount screen folder
+  mount:
+    state: absent
+  when: update_version
+
 - name: Remove Crontab for screenshot.sh
   cron:
     name: "Crontab for screenshot.sh"
@@ -77,9 +69,7 @@
     update_cache: yes
   vars:
     packages:
-    - nginx-light
-    - python
-    - virtualenv
+    - python3
     - libpng12-dev
 
 - name: Copy raspi2png
@@ -126,24 +116,20 @@
     requirements: /home/pi/soma/monitor-output/requirements.txt
     virtualenv: /home/pi/soma/monitor-output/monoutenv
 
-- name: Copy monitor-output.service
+- name: Copy service files
   copy:
-    src: monitor-output.service
-    dest: /etc/systemd/system/monitor-output.service
+    src: {{ item }}
+    dest: /etc/systemd/system/{{ item }}
+  with_items:
+    - monitor-output.service
+    - capture-output.service
 
-- name: Copy nginx config
-  copy:
-    src: soma_monout.conf
-    dest: /etc/nginx/sites-enabled/soma_monout.conf
- 
-- name: Reload service nginx
-  service:
-    name: nginx
-    state: reloaded
-    
-- name: Restart and enable monitor-output.service
+- name: Restart and enable services
   systemd:
-    name: monitor-output
+    name: {{ item }}
     state: restarted
     daemon_reload: yes
     enabled: yes
+  with_items:
+    - capture-output
+    - monitor-output

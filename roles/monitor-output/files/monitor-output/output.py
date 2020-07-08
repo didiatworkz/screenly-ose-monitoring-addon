@@ -16,21 +16,14 @@
 #	________________________________________
 
 
-import subprocess
 from flask import Flask, send_file
 
 _VERSION='1.0'
 
-from flask import Flask
-
 app = Flask('__name__')
 
 #app.debug = True # Uncomment to debug
-filename = 'screenshot.png'
-
-def capture_image():
-    command = '/usr/bin/raspi2png --pngname /home/pi/soma/monitor-output/tmp/screenshot.png'
-    p = subprocess.Popen(command, shell=True, stderr=subprocess.PIPE)
+filename = 'output.png'
 
 @app.route('/')
 def home():
@@ -38,7 +31,6 @@ def home():
 
 @app.route('/screen/screenshot.png')
 def output():
-    capture_image()
     return send_file('/home/pi/soma/monitor-output/tmp/' + filename, mimetype='image/png')
 
 @app.route('/version')

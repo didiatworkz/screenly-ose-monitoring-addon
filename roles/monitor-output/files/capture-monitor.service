@@ -1,0 +1,13 @@
+[Unit]
+Description=Screenly OSE Monitoring Add-on - Capture Output
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/pi/soma/monitor-output
+User=pi
+ExecStart=/bin/bash /home/pi/soma/monitor-output/capture-output.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
