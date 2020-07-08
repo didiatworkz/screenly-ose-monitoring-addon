@@ -119,7 +119,7 @@
 - name: Copy service files
   copy:
     src: "{{ item }}"
-    dest: /etc/systemd/system/{{ item }}
+    dest: "/etc/systemd/system/{{ item }}"
   with_items:
     - monitor-output.service
     - capture-output.service
