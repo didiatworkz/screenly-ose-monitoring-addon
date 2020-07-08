@@ -21,6 +21,7 @@
   
 - name: Unmount screen folder
   mount:
+    path: /var/www/html/addon/screen
     state: absent
   when: update_version
 
