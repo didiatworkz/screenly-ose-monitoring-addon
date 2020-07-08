@@ -18,6 +18,11 @@
 
 - set_fact: update_version="True"
   when: version1 or version1_2
+  
+- name: Unmount screen folder
+  mount:
+    state: absent
+  when: update_version
 
 - name: Remove old packages
   apt:
@@ -47,11 +52,6 @@
     path: /usr/bin/screenshot.sh
     state: absent
     force: yes
-  when: update_version
-
-- name: Remove mount screen folder
-  mount:
-    state: absent
   when: update_version
 
 - name: Remove Crontab for screenshot.sh
