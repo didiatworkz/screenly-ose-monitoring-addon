@@ -19,6 +19,13 @@
 - set_fact: update_version="True"
   when: version1 or version1_2
   
+- name: Clean /var/www/html/addon/screen
+  file:
+    path: /var/www/html/addon/screen/*
+    state: absent
+    force: yes
+  when: update_version
+
 - name: Unmount screen folder
   mount:
     path: /var/www/html/addon/screen
