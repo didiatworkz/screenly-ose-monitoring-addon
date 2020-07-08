@@ -118,7 +118,7 @@
 
 - name: Copy service files
   copy:
-    src: {{ item }}
+    src: "{{ item }}"
     dest: /etc/systemd/system/{{ item }}
   with_items:
     - monitor-output.service
@@ -126,7 +126,7 @@
 
 - name: Restart and enable services
   systemd:
-    name: {{ item }}
+    name: "{{ item }}"
     state: restarted
     daemon_reload: yes
     enabled: yes
