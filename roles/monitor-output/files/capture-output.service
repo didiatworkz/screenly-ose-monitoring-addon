@@ -5,7 +5,7 @@ After=network-online.target
 [Service]
 WorkingDirectory=/home/pi/soma/monitor-output
 User=pi
-ExecStart=/bin/bash /home/pi/soma/monitor-output/capture-output.sh
+ExecStart=/bin/bash /home/pi/soma/monitor-output/capture.sh
 Restart=always
 RestartSec=5
 
