@@ -77,7 +77,8 @@
     update_cache: yes
   vars:
     packages:
-    - python3
+    - python
+    - virtualenv
     - libpng12-dev
 
 - name: Copy raspi2png
