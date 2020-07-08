@@ -77,6 +77,7 @@
     update_cache: yes
   vars:
     packages:
+    - nginx-light
     - python
     - virtualenv
     - libpng12-dev
@@ -130,6 +131,16 @@
     src: monitor-output.service
     dest: /etc/systemd/system/monitor-output.service
 
+- name: Copy nginx config
+  copy:
+    src: soma_monout.conf
+    dest: /etc/nginx/sites-enabled/soma_monout.conf
+ 
+- name: Reload service nginx
+  service:
+    name: nginx
+    state: reloaded
+    
 - name: Restart and enable monitor-output.service
   systemd:
     name: monitor-output
