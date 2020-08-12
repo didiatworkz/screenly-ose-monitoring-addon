@@ -70,6 +70,7 @@
   vars:
     packages:
     - python3
+    - python3-setuptools
     - libpng12-dev
 
 - name: Copy raspi2png
@@ -110,11 +111,17 @@
     owner: pi
     group: pi
     mode: 0644
-
+    
+- name: Install virtualenv via pip
+  pip:
+    name: virtualenv
+    executable: pip3
+    
 - name: Install requirements
   pip:
     requirements: /home/pi/soma/monitor-output/requirements.txt
     virtualenv: /home/pi/soma/monitor-output/monoutenv
+    executable: pip3
 
 - name: Copy service files
   copy:
