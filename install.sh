@@ -1,6 +1,7 @@
 #!/bin/bash
 # Created by didiatworkz
 
+_ANSIBLE_VERSION=2.9.12
 _BRANCH=v2.0
 #_BRANCH=master
 
