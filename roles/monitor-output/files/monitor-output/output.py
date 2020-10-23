@@ -16,7 +16,7 @@
 #	________________________________________
 
 
-from flask import Flask, send_file
+from flask import Flask, send_file, redirect, url_for
 
 _VERSION='1.0'
 
@@ -32,6 +32,10 @@ def home():
 @app.route('/screen/screenshot.png')
 def output():
     return send_file('/home/pi/soma/monitor-output/tmp/' + filename, mimetype='image/png')
+
+@app.route('/show')
+def show():
+    return redirect(url_for('output'))
 
 @app.route('/version')
 def version():
