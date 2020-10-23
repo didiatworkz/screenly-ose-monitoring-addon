@@ -58,10 +58,10 @@
     - nginx
   when: update_version
 
-  - name: Remove mount screen folder
-    mount:
-      state: absent
-    when: update_version
+- name: Remove mount screen folder
+  mount:
+    state: absent
+  when: update_version
 
 - name: Remove old nginx files
   file:
