@@ -3,7 +3,7 @@
 # Screenly OSE Monitoring Add-ons (SOMA)
 
 <div style="text-align:center">
-<img title="Add-On" alt="Add-On" src="https://github.com/didiatworkz/screenly-ose-monitoring-addon/raw/v2.0/.github/IMAGES/addon.png" />
+<img title="Add-On" alt="Add-On" src="https://github.com/didiatworkz/screenly-ose-monitoring-addon/raw/master/.github/IMAGES/addon.png" />
 </div>
 
  ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/didiatworkz/screenly-ose-monitoring-addon/master) ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/didiatworkz/screenly-ose-monitoring-addon)  ![GitHub issues](https://img.shields.io/github/issues-raw/didiatworkz/screenly-ose-monitoring-addon)  ![GitHub stars](https://img.shields.io/github/stars/didiatworkz/screenly-ose-monitoring-addon?style=social)
