@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
 #	                            _
 #	   ____                    | |
@@ -11,37 +11,25 @@
 #			http://www.atworkz.de
 #			   info@atworkz.de
 #	________________________________________
-#	     Screenly OSE Monitoring Addon
-#		   Device Info Version 1.0
+#	     Screenly OSE Monitoring Add-On
+#		    Device Info Version 1.0
 #	________________________________________
 
 
 import psutil
 import platform
 import subprocess
+from flask import Flask, url_for
 
 _VERSION='1.0'
-
-from flask import Flask
+_HEADER='Screenly OSE Monitoring Add-On - Device Info V' + _VERSION
 
 app = Flask('__name__')
 #app.debug = True # Uncomment to debug
 
 @app.route('/')
 def home():
-    return 'Screenly OSE Monitoring Add-on - Device Info V' + _VERSION
-
-@app.route('/hostname')
-def hostname():
-    return str(platform.node())
-
-@app.route('/system')
-def uname():
-    return str(platform.uname())
-
-@app.route('/platform')
-def platform():
-    return str(platform.linux_distribution())
+    return _HEADER
 
 @app.route('/cpu')
 def cpu():
@@ -52,18 +40,6 @@ def cpu_frequency():
     cpu_frequency = psutil.cpu_freq()
     current = cpu_frequency.current
     return str(current)
-
-@app.route('/memory')
-def memory():
-    memory = psutil.virtual_memory()
-    free = round(memory.available/1024.0/1024.0,1)
-    return str(free)
-
-@app.route('/memory_total')
-def memory_total():
-    memory = psutil.virtual_memory()
-    total = round(memory.total/1024.0/1024.0,1)
-    return str(total)
 
 @app.route('/disk')
 def disk():
@@ -85,14 +61,46 @@ def disk_percent():
     total = round(disk.total/1024.0/1024.0/1024.0,1)
     return str(disk.percent)
 
-@app.route('/uptime')
-def uptime():
-    return str(psutil.boot_time())
+@app.route('/help')
+def help():
+    func_list = {}
+    output = ""
+    for rule in app.url_map.iter_rules():
+        if rule.endpoint != 'static':
+            func_list[rule.rule] = app.view_functions[rule.endpoint].__doc__
+    for value in func_list.keys():
+        output += '%s <br />' % (value)
+    return _HEADER + "<br /><br /><strong>Usable parameters:</strong><br />" + str(output)
+
+@app.route('/hostname')
+def hostname():
+    output = platform.node()
+    return str(output)
+
+@app.route('/memory')
+def memory():
+    memory = psutil.virtual_memory()
+    free = round(memory.available/1024.0/1024.0,1)
+    return str(free)
+
+@app.route('/memory_total')
+def memory_total():
+    memory = psutil.virtual_memory()
+    total = round(memory.total/1024.0/1024.0,1)
+    return str(total)
+
+@app.route('/platform')
+def platform():
+    return str(platform.linux_distribution())
 
 @app.route('/process')
 def running_process_list():
     items = subprocess.check_output(["ps -Ao comm --sort=-comm"], shell=True)
     return str(items)
+
+@app.route('/system')
+def uname():
+    return str(platform.uname())
 
 @app.route('/temp')
 def temp():
@@ -100,6 +108,10 @@ def temp():
     cpu_temp = tempFile.read()
     tempFile.close()
     return str(int(cpu_temp.strip()) / 1000)
+
+@app.route('/uptime')
+def uptime():
+    return str(psutil.boot_time())
 
 @app.route('/version')
 def version():

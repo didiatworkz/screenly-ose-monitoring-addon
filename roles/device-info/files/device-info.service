@@ -1,14 +1,15 @@
 [Unit]
-Description=Screenly OSE Monitoring Add-on - Device Info
+Description=Screenly OSE Monitoring Add-On - Device Info
 After=network-online.target
 
 [Service]
-WorkingDirectory=/home/pi/soma/device-info
 User=pi
-ExecStart=/usr/bin/python /home/pi/soma/device-info/info.py
+Group=www-data
+WorkingDirectory=/home/pi/soma/device-info
+Environment="PATH=/home/pi/soma/device-info/devinfenv/bin"
+ExecStart=/home/pi/soma/device-info/devinfenv/bin/gunicorn --workers 2 --bind unix:devinf.sock -m 007 wsgi:app
 Restart=always
 RestartSec=5
-Environment=PYTHONPATH=/home/pi/soma/device-info
 
 [Install]
 WantedBy=multi-user.target
