@@ -57,6 +57,3 @@ sudo -E ansible-playbook addon.yml
 
 header
 echo "Screenly OSE Monitor addon successfuly installed"
-echo "Device is being restarted in 5 seconds!"
-sleep 5
-#sudo reboot now
