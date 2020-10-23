@@ -1,7 +1,7 @@
 #!/bin/bash
 # Created by didiatworkz
 
-_ANSIBLE_VERSION=2.9.12
+_ANSIBLE_VERSION=2.9.9
 _BRANCH=v2.0
 #_BRANCH=master
 
@@ -19,7 +19,7 @@ cat << "EOF"
 
 EOF
 echo
-echo "Screenly OSE Monitor Add-on (SOMA)"
+echo "Screenly OSE Monitor Add-On (SOMA)"
 echo
 echo
 tput sgr 0
