@@ -46,11 +46,6 @@
     src: soma_devinf.conf
     dest: /etc/nginx/sites-enabled/soma_devinf.conf
 
-- name: Reload service nginx
-  service:
-    name: nginx
-    state: reloaded
-
 - name: Restart and enable services
   systemd:
     name: "{{ item }}"
@@ -59,3 +54,8 @@
     enabled: yes
   with_items:
     - device-info
+
+- name: Reload service nginx
+  service:
+    name: nginx
+    state: reloaded
