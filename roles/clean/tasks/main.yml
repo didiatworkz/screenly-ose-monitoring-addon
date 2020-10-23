@@ -58,6 +58,11 @@
     - nginx
   when: update_version
 
+- name: Unmount /var/www/html/addon/screen/
+  shell: "umount /var/www/html/addon/screen/"
+  become: yes
+  when: update_version
+
 - name: Remove old screen files
   file:
     path: /var/www/html/addon/screen/
