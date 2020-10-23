@@ -61,6 +61,7 @@
 - name: Unmount /var/www/html/addon/screen/
   shell: "umount /var/www/html/addon/screen/"
   become: yes
+  ignore_errors: True
   when: update_version
 
 - name: Remove old screen files
