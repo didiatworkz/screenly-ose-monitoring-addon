@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0] - 2020-10-23
 ### Added
-
+- Rewrite the screenshot scripts
+- Modules converted into separate services
+- Simple Device Info API created
+- Add readme
+- Add changelog
 
 ### Changed
-
+- Installation process
+- Exclude remove/clean role
 
 ## [2.2] - 2020-06-11
 
