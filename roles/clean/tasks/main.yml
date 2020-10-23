@@ -19,6 +19,29 @@
 - set_fact: update_version="True"
   when: version1 or version1_2
 
+- name: Get running processes
+  shell: "ps -ef | grep -v grep | grep -w screenshot.sh | awk '{print $2}'"
+  register: running_processes
+  when: update_version
+
+- name: Kill running processes
+  shell: "kill {{ item }}"
+  with_items: "{{ running_processes.stdout_lines }}"
+  when: update_version
+
+- wait_for:
+    path: "/proc/{{ item }}/status"
+    state: absent
+  with_items: "{{ running_processes.stdout_lines }}"
+  ignore_errors: yes
+  register: killed_processes
+  when: update_version
+
+- name: Force kill stuck processes
+  shell: "kill -9 {{ item }}"
+  with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+  when: update_version
+
 - name: Remove old packages
   apt:
     name: "{{ packages }}"
