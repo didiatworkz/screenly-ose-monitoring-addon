@@ -15,10 +15,10 @@
 #		    Device Info Version 1.0
 #	________________________________________
 
-
+import os
 import psutil
-import platform
-import subprocess
+from platform import uname, node, linux_distribution
+from subprocess import check_output
 from flask import Flask, url_for
 
 _VERSION='1.0'
@@ -74,7 +74,7 @@ def help():
 
 @app.route('/hostname')
 def hostname():
-    output = platform.node()
+    output = node()
     return str(output)
 
 @app.route('/memory')
@@ -91,16 +91,22 @@ def memory_total():
 
 @app.route('/platform')
 def platform():
-    return str(platform.linux_distribution())
+    return str(linux_distribution())
 
 @app.route('/process')
 def running_process_list():
-    items = subprocess.check_output(["ps -Ao comm --sort=-comm"], shell=True)
+    items = check_output(["ps -Ao comm --sort=-comm"], shell=True)
     return str(items)
 
 @app.route('/system')
 def uname():
-    return str(platform.uname())
+    a = check_output(["uname -s"], shell=True)
+    b = check_output(["uname -n"], shell=True)
+    c = check_output(["uname -r"], shell=True)
+    d = check_output(["uname -m"], shell=True)
+    e = check_output(["uname -o"], shell=True)
+    output = '%s|%s|%s|%s|%s' % (a[:-1], b[:-1], c[:-1], d[:-1], e[:-1])
+    return str(output)
 
 @app.route('/temp')
 def temp():
@@ -118,4 +124,4 @@ def version():
     return str(_VERSION)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9021)
+    app.run(host='0.0.0.0', port=9221)
