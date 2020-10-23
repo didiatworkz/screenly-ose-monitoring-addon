@@ -29,7 +29,7 @@ app = Flask('__name__')
 
 @app.route('/')
 def home():
-    return _HEADER
+    return str(_HEADER)
 
 @app.route('/cpu')
 def cpu():
