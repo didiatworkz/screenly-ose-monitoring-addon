@@ -11,8 +11,8 @@
 #			http://www.atworkz.de
 #			   info@atworkz.de
 #	________________________________________
-#	     Screenly OSE Monitoring Addon
-#		     Monitor Output 1.0
+#	     Screenly OSE Monitoring Add-On
+#		      Monitor Output 1.0
 #	________________________________________
 
 
