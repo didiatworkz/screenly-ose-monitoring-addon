@@ -12,12 +12,19 @@
     path: /etc/nginx/sites-enabled/addon.conf
   register: version1_2_s
 
+- name: check if screenshot.sh found
+  stat:
+    path: /usr/bin/screenshot.sh
+  register: screenshot_s
+
 - set_fact: version1="{{version1_s.stat.exists}}"
 
 - set_fact: version1_2="{{version1_2_s.stat.exists}}"
 
+- set_fact: screenshot="{{screenshot_s.stat.exists}}"
+
 - set_fact: update_version="True"
-  when: version1 or version1_2
+  when: version1 or version1_2 or screenshot
 
 - name: Get running processes
   shell: "ps -ef | grep -v grep | grep -w screenshot.sh | awk '{print $2}'"
