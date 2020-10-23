@@ -58,6 +58,13 @@
     - nginx
   when: update_version
 
+- name: Remove old screen files
+  file:
+    path: /var/www/html/addon/screen/
+    state: absent
+    force: yes
+  when: update_version
+
 - name: Remove mount screen folder
   mount:
     path: /var/www/html/addon/screen
