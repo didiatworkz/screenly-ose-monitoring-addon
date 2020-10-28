@@ -31,6 +31,10 @@ app = Flask('__name__')
 def home():
     return str(_HEADER)
 
+@app.route('/check')
+def cpu():
+    return "true"
+
 @app.route('/cpu')
 def cpu():
     return str(psutil.cpu_percent())
