@@ -5,6 +5,8 @@ _ANSIBLE_VERSION=2.9.9
 _BRANCH=v3.0
 #_BRANCH=master
 
+_EXECUTED_USER=$(whoami)
+
 
 header() {
 tput setaf 172
@@ -53,7 +55,7 @@ echo
 sudo rm -rf /tmp/soma
 sudo git clone --branch $_BRANCH https://github.com/didiatworkz/screenly-ose-monitoring-addon.git /tmp/soma
 cd /tmp/soma
-sudo -E ansible-playbook addon.yml | tee soma_install.log
+sudo -E ansible-playbook addon.yml | tee /home/$_EXECUTED_USER/soma_install.log
 
 header
 echo "Screenly OSE Monitor addon successfuly installed"
