@@ -5,8 +5,6 @@ _ANSIBLE_VERSION=2.9.9
 _BRANCH=v3.0
 #_BRANCH=master
 
-_EXECUTED_USER=$(whoami)
-script /home/$_EXECUTED_USER/soma_install.log
 
 header() {
 tput setaf 172
@@ -59,4 +57,3 @@ sudo -E ansible-playbook addon.yml
 
 header
 echo "Screenly OSE Monitor addon successfuly installed"
-exit
