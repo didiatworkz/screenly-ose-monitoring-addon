@@ -32,7 +32,7 @@ def home():
     return str(_HEADER)
 
 @app.route('/check')
-def cpu():
+def check():
     return "true"
 
 @app.route('/cpu')
