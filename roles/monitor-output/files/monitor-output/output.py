@@ -18,7 +18,7 @@
 
 from flask import Flask, send_file, redirect, url_for
 
-_VERSION='1.0'
+_VERSION='3.0'
 
 app = Flask('__name__')
 

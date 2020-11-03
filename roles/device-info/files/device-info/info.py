@@ -21,7 +21,7 @@ from platform import uname, node, linux_distribution
 from subprocess import check_output
 from flask import Flask, url_for
 
-_VERSION='1.0'
+_VERSION='1.2'
 _HEADER='Screenly OSE Monitoring Add-On - Device Info V' + _VERSION
 
 app = Flask('__name__')
