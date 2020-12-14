@@ -1,0 +1,16 @@
+[Unit]
+Description=Screenly OSE Monitoring Add-On - Monitor Output
+After=network-online.target
+
+[Service]
+User=pi
+Group=www-data
+WorkingDirectory=/home/pi/soma/monitor-output
+Environment="PATH=/home/pi/soma/monitor-output/monoutenv/bin"
+ExecStartPre=/bin/sh -c '/bin/cp -f /home/pi/soma/monitor-output/booting.png /home/pi/soma/monitor-output/tmp/screenshot.png'
+ExecStart=/home/pi/soma/monitor-output/monoutenv/bin/gunicorn --workers 2 --bind unix:monout.sock -m 007 wsgi:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

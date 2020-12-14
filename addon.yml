@@ -3,12 +3,7 @@
   user: pi
   become: yes
 
-  handlers:
-    - name: restart-nginx
-      service:
-        name: nginx
-        state: restarted
-
   roles:
-    - add-on
-    - screenshot
+    - clean
+    - monitor-output
+    - device-info

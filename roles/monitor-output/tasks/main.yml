@@ -1,0 +1,89 @@
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packages:
+    - python3
+    - python3-setuptools
+    - libpng12-dev
+
+- name: Copy raspi2png
+  copy:
+    src: raspi2png
+    dest: /tmp
+
+- name: Build raspi2png
+  make:
+    chdir: /tmp/raspi2png
+
+- name: Run 'install' target as root
+  make:
+    chdir: /tmp/raspi2png
+    target: install
+  become: yes
+
+- name: Create working dir
+  file:
+    path: /home/pi/soma/monitor-output
+    state: directory
+    owner: pi
+    group: pi
+    recurse: yes
+
+- name: Mount monitor-output tmp folder
+  mount:
+    path: /home/pi/soma/monitor-output/tmp
+    src: tmpfs
+    fstype: tmpfs
+    opts: nodev,nosuid,size=25M
+    state: mounted
+
+- name: Copy files
+  copy:
+    src: monitor-output
+    dest: /home/pi/soma
+    owner: pi
+    group: pi
+    mode: 0644
+
+- name: Install virtualenv via pip
+  pip:
+    name: virtualenv
+
+- name: Install requirements
+  pip:
+    requirements: /home/pi/soma/monitor-output/requirements.txt
+    virtualenv: /home/pi/soma/monitor-output/monoutenv
+
+- name: Copy service files
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - monitor-output.service
+    - capture-output.service
+
+- name: Copy nginx config
+  copy:
+    src: soma_monout.conf
+    dest: /etc/nginx/sites-enabled/soma_monout.conf
+
+- name: Reload service nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: Restart and enable services
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  with_items:
+    - capture-output
+    - monitor-output

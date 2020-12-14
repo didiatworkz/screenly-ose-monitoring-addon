@@ -1,0 +1,105 @@
+# Check older versions
+
+- set_fact: update_version="False"
+
+- name: check if older version installed
+  stat:
+    path: /etc/nginx/sites-enabled/screenshot.conf
+  register: version1_s
+
+- name: check if older version installed
+  stat:
+    path: /etc/nginx/sites-enabled/addon.conf
+  register: version1_2_s
+
+- name: check if screenshot.sh found
+  stat:
+    path: /usr/bin/screenshot.sh
+  register: screenshot_s
+
+- set_fact: version1="{{version1_s.stat.exists}}"
+
+- set_fact: version1_2="{{version1_2_s.stat.exists}}"
+
+- set_fact: screenshot="{{screenshot_s.stat.exists}}"
+
+- set_fact: update_version="True"
+  when: version1 or version1_2 or screenshot
+
+- name: Get running processes
+  shell: "ps -ef | grep -v grep | grep -w screenshot.sh | awk '{print $2}'"
+  register: running_processes
+  when: update_version
+
+- name: Kill running processes
+  shell: "kill {{ item }}"
+  with_items: "{{ running_processes.stdout_lines }}"
+  when: update_version
+
+- wait_for:
+    path: "/proc/{{ item }}/status"
+    state: absent
+  with_items: "{{ running_processes.stdout_lines }}"
+  ignore_errors: yes
+  register: killed_processes
+  when: update_version
+
+- name: Force kill stuck processes
+  shell: "kill -9 {{ item }}"
+  with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+  when: update_version
+
+- name: Remove old packages
+  apt:
+    name: "{{ packages }}"
+    state: absent
+  vars:
+    packages:
+    - nginx
+  when: update_version
+
+- name: Unmount /var/www/html/addon/screen/
+  shell: "umount /var/www/html/addon/screen/"
+  become: yes
+  ignore_errors: True
+  when: update_version
+
+- name: Remove old screen files
+  file:
+    path: /var/www/html/addon/screen/
+    state: absent
+    force: yes
+  when: update_version
+
+- name: Remove mount screen folder
+  mount:
+    path: /var/www/html/addon/screen
+    state: absent
+  when: update_version
+
+- name: Remove old nginx files
+  file:
+    path: /etc/nginx/sites-enabled/addon.conf
+    state: absent
+    force: yes
+  when: update_version
+
+- name: Remove old files
+  file:
+    path: /var/www/html/addon
+    state: absent
+    force: yes
+  when: update_version
+
+- name: Remove old screenshot.sh
+  file:
+    path: /usr/bin/screenshot.sh
+    state: absent
+    force: yes
+  when: update_version
+
+- name: Remove Crontab for screenshot.sh
+  cron:
+    name: "Crontab for screenshot.sh"
+    state: absent
+  when: update_version

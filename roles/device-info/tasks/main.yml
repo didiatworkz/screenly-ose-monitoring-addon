@@ -1,0 +1,61 @@
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packages:
+    - python3
+    - python3-setuptools
+
+- name: Create working dir
+  file:
+    path: /home/pi/soma/device-info
+    state: directory
+    owner: pi
+    group: pi
+    recurse: yes
+
+- name: Copy files
+  copy:
+    src: device-info
+    dest: /home/pi/soma
+    owner: pi
+    group: pi
+    mode: 0644
+
+- name: Install virtualenv via pip
+  pip:
+    name: virtualenv
+
+- name: Install requirements
+  pip:
+    requirements: /home/pi/soma/device-info/requirements.txt
+    virtualenv: /home/pi/soma/device-info/devinfenv
+
+- name: Copy device-info.service
+  copy:
+    src: device-info.service
+    dest: /etc/systemd/system/device-info.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy nginx config
+  copy:
+    src: soma_devinf.conf
+    dest: /etc/nginx/sites-enabled/soma_devinf.conf
+
+- name: Restart and enable services
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  with_items:
+    - device-info
+
+- name: Reload service nginx
+  service:
+    name: nginx
+    state: reloaded
