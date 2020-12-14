@@ -32,7 +32,7 @@ Simple installation:
 1. Connect to the player via SSH or terminal ([CTRL]+[ALT]+F1)
 2. Copy this line and execute it
 ```bash
-bash <(curl -sL https://git.io/fjg7h)
+bash <(curl -sL https://git.io/Jf900)
 ```
 3. Done
 
