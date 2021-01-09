@@ -108,17 +108,12 @@ def platform():
 
 @app.route('/process')
 def running_process_list():
-    items = check_output(["ps -Ao comm --sort=-comm"], shell=True)
-    return str(items)
+    procs = {p.info for p in psutil.process_iter(['pid', 'name', 'username'])}
+    return procs
 
 @app.route('/system')
 def uname():
-    a = check_output(["uname -s"], shell=True)
-    b = check_output(["uname -n"], shell=True)
-    c = check_output(["uname -r"], shell=True)
-    d = check_output(["uname -m"], shell=True)
-    e = check_output(["uname -o"], shell=True)
-    output = '%s|%s|%s|%s|%s' % (a[:-1], b[:-1], c[:-1], d[:-1], e[:-1])
+    output = os.uname()
     return str(output)
 
 @app.route('/temp')
