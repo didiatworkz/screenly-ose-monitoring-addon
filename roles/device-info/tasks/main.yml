@@ -34,7 +34,7 @@
   pip:
     requirements: /home/pi/soma/device-info/requirements.txt
     virtualenv: /home/pi/soma/device-info/devinfenv
-    virtualenv_command: /usr/bin/python3 -m venv
+    virtualenv_python: python3
 
 - name: Copy device-info.service
   copy:
