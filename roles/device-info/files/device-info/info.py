@@ -17,7 +17,8 @@
 
 import os
 import psutil
-from platform import uname, node, linux_distribution
+import distro
+import socket
 from subprocess import check_output
 from flask import Flask, url_for
 
@@ -78,7 +79,7 @@ def help():
 
 @app.route('/hostname')
 def hostname():
-    output = node()
+    output = socket.gethostname()
     return str(output)
 
 @app.route('/memory')
@@ -95,7 +96,7 @@ def memory_total():
 
 @app.route('/platform')
 def platform():
-    return str(linux_distribution())
+    return str(distro.linux_distribution(full_distribution_name=False))
 
 @app.route('/process')
 def running_process_list():
