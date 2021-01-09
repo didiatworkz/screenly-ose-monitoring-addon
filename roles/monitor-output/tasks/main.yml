@@ -7,6 +7,7 @@
     packages:
     - python3
     - python3-setuptools
+    - python3-pip
     - libpng12-dev
 
 - name: Copy raspi2png
@@ -51,11 +52,13 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
+    executable: pip3
 
 - name: Install requirements
   pip:
     requirements: /home/pi/soma/monitor-output/requirements.txt
     virtualenv: /home/pi/soma/monitor-output/monoutenv
+    virtualenv_command: /usr/bin/python3 -m venv
 
 - name: Copy service files
   copy:

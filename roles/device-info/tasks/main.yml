@@ -7,6 +7,7 @@
     packages:
     - python3
     - python3-setuptools
+    - python3-pip
 
 - name: Create working dir
   file:
@@ -27,11 +28,13 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
+    executable: pip3
 
 - name: Install requirements
   pip:
     requirements: /home/pi/soma/device-info/requirements.txt
     virtualenv: /home/pi/soma/device-info/devinfenv
+    virtualenv_command: /usr/bin/python3 -m venv
 
 - name: Copy device-info.service
   copy:
