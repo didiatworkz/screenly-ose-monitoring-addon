@@ -12,7 +12,7 @@
 #			   info@atworkz.de
 #	________________________________________
 #	     Screenly OSE Monitoring Add-On
-#		    Device Info Version 1.0
+#		    Device Info Version 1.3
 #	________________________________________
 
 import os
@@ -22,7 +22,7 @@ import socket
 from subprocess import check_output
 from flask import Flask, url_for
 
-_VERSION='1.2'
+_VERSION='1.3'
 _HEADER='Screenly OSE Monitoring Add-On - Device Info V' + _VERSION
 
 app = Flask('__name__')
@@ -62,8 +62,8 @@ def disk_total():
 def disk_percent():
     disk = psutil.disk_usage('/')
     # Divide from Bytes -> KB -> MB -> GB
-    free = round(disk.free/1024.0/1024.0/1024.0,1)
-    total = round(disk.total/1024.0/1024.0/1024.0,1)
+    # free = round(disk.free/1024.0/1024.0/1024.0,1)
+    # total = round(disk.total/1024.0/1024.0/1024.0,1)
     return str(disk.percent)
 
 @app.route('/help')
@@ -94,9 +94,15 @@ def memory_total():
     total = round(memory.total/1024.0/1024.0,1)
     return str(total)
 
+@app.route('/model')
+def model():
+    output = check_output(["cat /proc/device-tree/model"], shell=True)
+    return str(output)
+
 @app.route('/platform')
 def platform():
-    return str(distro.linux_distribution(full_distribution_name=False))
+    output = distro.os_release_info()
+    return str(output)
 
 @app.route('/process')
 def running_process_list():
