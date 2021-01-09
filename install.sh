@@ -53,7 +53,7 @@ echo
 sudo rm -rf /tmp/soma
 sudo git clone --branch $_BRANCH https://github.com/didiatworkz/screenly-ose-monitoring-addon.git /tmp/soma
 cd /tmp/soma
-sudo -E ansible-playbook addon.yml
+sudo -E ansible-playbook addon.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
 header
 echo "Screenly OSE Monitor addon successfuly installed"
