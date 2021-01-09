@@ -96,8 +96,10 @@ def memory_total():
 
 @app.route('/model')
 def model():
-    output = check_output(["cat /proc/device-tree/model"], shell=True)
-    return str(output)
+    modelFile = open("/proc/device-tree/model")
+    model = modelFile.read()
+    modelFile.close()
+    return str(model)
 
 @app.route('/platform')
 def platform():
