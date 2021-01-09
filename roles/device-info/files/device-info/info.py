@@ -103,7 +103,7 @@ def model():
 
 @app.route('/platform')
 def platform():
-    output = distro.os_release_info()
+    output = distro.info(pretty=False, best=False)
     return str(output)
 
 @app.route('/process')
