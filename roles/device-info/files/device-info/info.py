@@ -21,7 +21,7 @@ import distro
 from subprocess import check_output
 from flask import Flask, url_for
 
-_VERSION='1.2'
+_VERSION='1.3'
 _HEADER='Screenly OSE Monitoring Add-On - Device Info V' + _VERSION
 
 app = Flask('__name__')
@@ -93,9 +93,13 @@ def memory_total():
     total = round(memory.total/1024.0/1024.0,1)
     return str(total)
 
-@app.route('/platform')
+@app.route('/platform_name')
 def platform():
-    return str(distro.linux_distribution())
+    return str(distro.name())
+
+@app.route('/platform_version')
+def platform():
+    return str(distro.codename())
 
 @app.route('/process')
 def running_process_list():
