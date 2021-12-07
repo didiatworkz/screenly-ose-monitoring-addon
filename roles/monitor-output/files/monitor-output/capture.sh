@@ -12,7 +12,7 @@
 #			        info@atworkz.de
 #	________________________________________
 #	     Screenly OSE Monitoring Add-on
-#		     Capture Output Version 2.0
+#		     Capture Output Version 2.1
 #	________________________________________
 
 raspi2png --pngname /home/pi/soma/monitor-output/tmp/output_tmp.png
