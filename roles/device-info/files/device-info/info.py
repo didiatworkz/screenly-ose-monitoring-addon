@@ -95,7 +95,7 @@ def memory_total():
 
 @app.route('/platform')
 def platform():
-    return str(distro.codename())
+    return str(distro.linux_distribution())
 
 @app.route('/process')
 def running_process_list():
