@@ -17,11 +17,11 @@
 
 import os
 import psutil
-from platform import uname, node, linux_distribution
+import distro
 from subprocess import check_output
 from flask import Flask, url_for
 
-_VERSION='1.2'
+_VERSION='1.3'
 _HEADER='Screenly OSE Monitoring Add-On - Device Info V' + _VERSION
 
 app = Flask('__name__')
@@ -78,7 +78,7 @@ def help():
 
 @app.route('/hostname')
 def hostname():
-    output = node()
+    output = os.uname().nodename
     return str(output)
 
 @app.route('/memory')
@@ -95,7 +95,7 @@ def memory_total():
 
 @app.route('/platform')
 def platform():
-    return str(linux_distribution())
+    return str("{'id':'" + distro.name() + "', 'version':'" + distro.id() +"', 'codename':'" + distro.codename() + "'}")
 
 @app.route('/process')
 def running_process_list():

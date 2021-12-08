@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Set GPU memory to 128MB -> Fix 4k screen issue
 
+### Changed
+- platform library replaced with distro
+
 ## [3.0] - 2020-10-23
 ### Added
 - Rewrite the screenshot scripts
