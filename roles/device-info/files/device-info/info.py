@@ -21,7 +21,7 @@ import distro
 from subprocess import check_output
 from flask import Flask, url_for
 
-_VERSION='1.2'
+_VERSION='1.3'
 _HEADER='Screenly OSE Monitoring Add-On - Device Info V' + _VERSION
 
 app = Flask('__name__')
