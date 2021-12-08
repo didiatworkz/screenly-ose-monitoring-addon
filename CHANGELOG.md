@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - platform module replaced with distro
-- platform endpoint splitted into platform_name and platform_version
 
 ## [3.0] - 2020-10-23
 ### Added
