@@ -67,17 +67,6 @@
   with_items:
     - monitor-output.service
     - capture-output.service
-
-- name: Copy nginx config
-  copy:
-    src: soma_monout.conf
-    dest: /etc/nginx/sites-enabled/soma_monout.conf
-
-- name: Reload service nginx
-  service:
-    name: nginx
-    state: reloaded
-
 - name: Change GPU memory size to 128
   command: raspi-config nonint do_memory_split 128
   become: yes
