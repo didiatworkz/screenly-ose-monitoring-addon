@@ -41,11 +41,6 @@
     group: root
     mode: 0644
 
-- name: Copy nginx config
-  copy:
-    src: soma_devinf.conf
-    dest: /etc/nginx/sites-enabled/soma_devinf.conf
-
 - name: Restart and enable services
   systemd:
     name: "{{ item }}"
@@ -54,8 +49,3 @@
     enabled: yes
   with_items:
     - device-info
-
-- name: Reload service nginx
-  service:
-    name: nginx
-    state: reloaded
