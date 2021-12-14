@@ -12,13 +12,13 @@
 #			   info@atworkz.de
 #	________________________________________
 #	     Screenly OSE Monitoring Add-On
-#		      Monitor Output 3.2
+#		      Monitor Output 1.0
 #	________________________________________
 
 
 from flask import Flask, send_file, redirect, url_for
 
-_VERSION='3.2'
+_VERSION='3.1'
 
 app = Flask('__name__')
 
@@ -41,6 +41,5 @@ def show():
 def version():
     return str(_VERSION)
 
-if __name__ == "__main__":
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=9020)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=9220)
