@@ -1,8 +1,8 @@
 #!/bin/bash
 # Created by didiatworkz
 
-_ANSIBLE_VERSION=2.9.9
-_BRANCH=v3.1
+_ANSIBLE_VERSION=5.0.1
+_BRANCH=v3.2
 #_BRANCH=master
 
 
@@ -56,4 +56,4 @@ cd /tmp/soma
 sudo -E ansible-playbook addon.yml
 
 header
-echo "Screenly OSE Monitor addon successfuly installed"
+echo "Screenly OSE Monitor addon successfully installed"
