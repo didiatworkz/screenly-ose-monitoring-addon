@@ -31,7 +31,7 @@ echo ""
 echo -e "[ \e[32mSOMA\e[39m ] Start Add-on installation..."
 sleep 2
 
-if [ ! -e /home/pi/screenly/serverrr.py ]
+if [ ! -e /home/pi/screenly/server.py ]
 then
   echo -e "[ \e[32mSOMA\e[39m ] ScreenlyOSE not installed!"
   sudo mkdir -p /etc/ansible
