@@ -77,6 +77,8 @@ then
 else 
     echo -e "[ \e[32mSOMA\e[39m ] No nginx server installed!"
 fi
+
+echo -e "[ \e[32mSOMA\e[39m ] Check if nginx server installed...DONE"
 echo
 echo
 echo
