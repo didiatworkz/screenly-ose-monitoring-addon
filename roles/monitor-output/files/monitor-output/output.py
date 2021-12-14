@@ -31,7 +31,14 @@ def home():
 
 @app.route('/screen/screenshot.png')
 def output():
-    return send_file('/home/pi/soma/monitor-output/tmp/' + filename, mimetype='image/png')
+    _FILE = '/home/pi/soma/monitor-output/tmp/' + filename
+    try:
+        f = open(_FILE)
+        return send_file(_FILE, mimetype='image/png')
+    except IOError:
+        return send_file('/home/pi/soma/monitor-output/error.png', mimetype='image/png')
+    finally:
+        f.close()
 
 @app.route('/show')
 def show():
