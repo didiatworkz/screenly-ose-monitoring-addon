@@ -57,7 +57,7 @@
   pip:
     requirements: /home/pi/soma/monitor-output/requirements.txt
     virtualenv: /home/pi/soma/monitor-output/monoutenv
-    virtualenv_command: python3
+    virtualenv_command: /usr/bin/python3 -m venv
 
 - name: Copy service files
   copy:
