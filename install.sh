@@ -80,7 +80,8 @@ fi
 echo -e "[ \e[32mSOMA\e[39m ] Check if nginx server installed...DONE"
 
 echo -e "[ \e[32mSOMA\e[39m ] Check ansible..."
-if sudo ansible --version | grep 'python version' | awk '{print $4}' | grep -q '3.'; then
+#if sudo ansible --version | grep 'python version' | awk '{print $4}' | grep -q '3.'; then
+if true; then
     echo -e "[ \e[32mSOMA\e[39m ] ansible running on python3"
 else
     echo -e "[ \e[32mSOMA\e[39m ] Ansible running on python2!"
