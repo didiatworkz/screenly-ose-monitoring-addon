@@ -80,20 +80,6 @@ else
 fi
 echo -e "[ \e[32mSOMA\e[39m ] Check if nginx server installed...DONE"
 
-echo -e "[ \e[32mSOMA\e[39m ] Check ansible..."
-#if sudo ansible --version | grep 'python version' | awk '{print $4}' | grep -q '3.'; then
-if true; then
-    echo -e "[ \e[32mSOMA\e[39m ] ansible running on python3"
-else
-    echo -e "[ \e[32mSOMA\e[39m ] Ansible running on python2!"
-    echo -e "[ \e[32mSOMA\e[39m ] Upgrade ansible to python3..."
-    sudo pip uninstall -y ansible
-    curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
-    sudo pip3 install ansible=="$_ANSIBLE_VERSION"
-    echo -e "[ \e[32mSOMA\e[39m ] ansible updated to python3!"
-fi
-echo -e "[ \e[32mSOMA\e[39m ] Check ansible...DONE"
-
 echo
 echo
 echo
