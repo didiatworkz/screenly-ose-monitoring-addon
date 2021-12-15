@@ -85,7 +85,7 @@ if sudo ansible --version | grep 'python version' | awk '{print $4}' | grep -q '
 else
     echo -e "[ \e[32mSOMA\e[39m ] Ansible running on python2!"
     echo -e "[ \e[32mSOMA\e[39m ] Upgrade ansible to python3..."
-    yes | sudo pip uninstall ansible
+    sudo pip uninstall -y ansible
     curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
     sudo pip3 install -y ansible=="$_ANSIBLE_VERSION"
     echo -e "[ \e[32mSOMA\e[39m ] ansible updated to python3!"
