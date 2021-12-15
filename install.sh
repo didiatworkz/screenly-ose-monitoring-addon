@@ -31,6 +31,8 @@ echo ""
 echo -e "[ \e[32mSOMA\e[39m ] Start Add-on installation..."
 sleep 2
 
+curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
+
 if [ ! -e /home/pi/screenly/server.py ]
 then
   echo -e "[ \e[32mSOMA\e[39m ] ScreenlyOSE not installed!"
@@ -40,7 +42,6 @@ then
   sudo apt update
   sudo apt-get purge -y python-setuptools python-pip python-pyasn1 libffi-dev
   sudo apt-get install -y python3-dev git-core libffi-dev libssl-dev
-  curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
   sudo pip3 install ansible=="$_ANSIBLE_VERSION"
   echo -e "[ \e[32mSOMA\e[39m ] Install ansible...DONE"
   
