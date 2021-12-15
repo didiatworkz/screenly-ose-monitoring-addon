@@ -105,3 +105,4 @@ sudo -E ansible-playbook addon.yml
 header
 echo -e "[ \e[32mSOMA\e[39m ] Add-on installation finished!"
 echo -e "[ \e[32mSOMA\e[39m ] It is recommended to restart the device."
+exit
