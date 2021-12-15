@@ -51,7 +51,7 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
-    executable: python3
+    executable: pip3
 
 - name: Install requirements
   pip:
