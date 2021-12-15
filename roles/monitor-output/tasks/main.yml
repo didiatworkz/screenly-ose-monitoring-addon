@@ -51,11 +51,13 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
+    executable: pip3
 
 - name: Install requirements
   pip:
     requirements: /home/pi/soma/monitor-output/requirements.txt
     virtualenv: /home/pi/soma/monitor-output/monoutenv
+    executable: pip3
 
 - name: Copy service files
   copy:
