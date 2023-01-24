@@ -1,4 +1,4 @@
-flask==2.0.2
-waitress==2.0.0
+flask==2.2.2
+waitress==2.1.2
 psutil==5.8.0
 distro==1.6.0
