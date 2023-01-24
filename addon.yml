@@ -4,6 +4,5 @@
   become: yes
 
   roles:
-    - clean
     - monitor-output
     - device-info
