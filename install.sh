@@ -88,6 +88,7 @@ sudo rm -rf /tmp/soma
 sudo git clone --branch $_BRANCH https://github.com/didiatworkz/screenly-ose-monitoring-addon.git /tmp/soma
 cd /tmp/soma
 echo -e "[ \e[32mSOMA\e[39m ] Start ansible installation process..."
+ansible-galaxy collection install community.general
 sudo -E ansible-playbook addon.yml
 
 header
