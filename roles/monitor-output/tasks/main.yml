@@ -34,7 +34,7 @@
     recurse: yes
 
 - name: Mount monitor-output tmp folder
-  mount:
+  ansible.posix.mount:
     path: /home/pi/soma/monitor-output/tmp
     src: tmpfs
     fstype: tmpfs
