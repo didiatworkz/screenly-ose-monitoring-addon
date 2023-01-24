@@ -2,8 +2,8 @@
 # Created by didiatworkz
 
 _ANSIBLE_VERSION=4.9.0
-_BRANCH=v3.2
-#_BRANCH=master
+#_BRANCH=v3.2
+_BRANCH=master
 
 
 header() {
