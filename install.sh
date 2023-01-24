@@ -89,6 +89,7 @@ sudo git clone --branch $_BRANCH https://github.com/didiatworkz/screenly-ose-mon
 cd /tmp/soma
 echo -e "[ \e[32mSOMA\e[39m ] Start ansible installation process..."
 ansible-galaxy collection install community.general
+ansible-galaxy collection install ansible.posix
 sudo -E ansible-playbook addon.yml
 
 header
