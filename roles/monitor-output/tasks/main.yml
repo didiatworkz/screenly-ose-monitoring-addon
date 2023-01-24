@@ -16,11 +16,11 @@
     dest: /tmp
 
 - name: Build raspi2png
-  make:
+  community.general.make:
     chdir: /tmp/raspi2png
 
 - name: Run 'install' target as root
-  make:
+  community.general.make:
     chdir: /tmp/raspi2png
     target: install
   become: yes
