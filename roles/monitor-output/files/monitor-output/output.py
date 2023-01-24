@@ -12,13 +12,13 @@
 #			   info@atworkz.de
 #	________________________________________
 #	     Screenly OSE Monitoring Add-On
-#		      Monitor Output 1.0
+#		      Monitor Output 3.2
 #	________________________________________
 
 
 from flask import Flask, send_file, redirect, url_for
 
-_VERSION='3.1'
+_VERSION='3.2'
 
 app = Flask('__name__')
 
@@ -31,7 +31,14 @@ def home():
 
 @app.route('/screen/screenshot.png')
 def output():
-    return send_file('/home/pi/soma/monitor-output/tmp/' + filename, mimetype='image/png')
+    _FILE = '/home/pi/soma/monitor-output/tmp/' + filename
+    try:
+        f = open(_FILE)
+        return send_file(_FILE, mimetype='image/png')
+    except IOError:
+        return send_file('/home/pi/soma/monitor-output/error.png', mimetype='image/png')
+    finally:
+        f.close()
 
 @app.route('/show')
 def show():
@@ -41,5 +48,6 @@ def show():
 def version():
     return str(_VERSION)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9220)
+if __name__ == "__main__":
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=9020)

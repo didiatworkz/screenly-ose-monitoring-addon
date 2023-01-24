@@ -7,8 +7,8 @@ User=pi
 Group=www-data
 WorkingDirectory=/home/pi/soma/monitor-output
 Environment="PATH=/home/pi/soma/monitor-output/monoutenv/bin"
-ExecStartPre=/bin/sh -c '/bin/cp -f /home/pi/soma/monitor-output/booting.png /home/pi/soma/monitor-output/tmp/screenshot.png'
-ExecStart=/home/pi/soma/monitor-output/monoutenv/bin/gunicorn --workers 2 --bind unix:monout.sock -m 007 wsgi:app
+ExecStartPre=/bin/sh -c '/bin/cp -f /home/pi/soma/monitor-output/booting.png /home/pi/soma/monitor-output/tmp/output.png'
+ExecStart=/home/pi/soma/monitor-output/monoutenv/bin/python3 output.py
 Restart=always
 RestartSec=5
 

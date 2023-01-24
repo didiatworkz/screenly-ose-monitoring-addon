@@ -7,6 +7,7 @@
     packages:
     - python3
     - python3-setuptools
+    - python3-venv
 
 - name: Create working dir
   file:
@@ -27,11 +28,13 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
+    executable: pip3
 
 - name: Install requirements
   pip:
     requirements: /home/pi/soma/device-info/requirements.txt
     virtualenv: /home/pi/soma/device-info/devinfenv
+    virtualenv_command: /usr/bin/python3 -m venv
 
 - name: Copy device-info.service
   copy:
@@ -41,11 +44,6 @@
     group: root
     mode: 0644
 
-- name: Copy nginx config
-  copy:
-    src: soma_devinf.conf
-    dest: /etc/nginx/sites-enabled/soma_devinf.conf
-
 - name: Restart and enable services
   systemd:
     name: "{{ item }}"
@@ -54,8 +52,3 @@
     enabled: yes
   with_items:
     - device-info
-
-- name: Reload service nginx
-  service:
-    name: nginx
-    state: reloaded

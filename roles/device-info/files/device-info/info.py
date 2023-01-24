@@ -12,7 +12,7 @@
 #			   info@atworkz.de
 #	________________________________________
 #	     Screenly OSE Monitoring Add-On
-#		    Device Info Version 1.0
+#		    Device Info Version 1.4
 #	________________________________________
 
 import os
@@ -21,7 +21,7 @@ import distro
 from subprocess import check_output
 from flask import Flask, url_for
 
-_VERSION='1.3'
+_VERSION='1.4'
 _HEADER='Screenly OSE Monitoring Add-On - Device Info V' + _VERSION
 
 app = Flask('__name__')
@@ -127,5 +127,6 @@ def uptime():
 def version():
     return str(_VERSION)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9221)
+if __name__ == "__main__":
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=9021)

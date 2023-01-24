@@ -7,6 +7,7 @@
     packages:
     - python3
     - python3-setuptools
+    - python3-venv
     - libpng-dev
 
 - name: Copy raspi2png
@@ -15,11 +16,11 @@
     dest: /tmp
 
 - name: Build raspi2png
-  make:
+  community.general.make:
     chdir: /tmp/raspi2png
 
 - name: Run 'install' target as root
-  make:
+  community.general.make:
     chdir: /tmp/raspi2png
     target: install
   become: yes
@@ -33,7 +34,7 @@
     recurse: yes
 
 - name: Mount monitor-output tmp folder
-  mount:
+  ansible.posix.mount:
     path: /home/pi/soma/monitor-output/tmp
     src: tmpfs
     fstype: tmpfs
@@ -51,11 +52,13 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
+    executable: pip3
 
 - name: Install requirements
   pip:
     requirements: /home/pi/soma/monitor-output/requirements.txt
     virtualenv: /home/pi/soma/monitor-output/monoutenv
+    virtualenv_command: /usr/bin/python3 -m venv
 
 - name: Copy service files
   copy:
@@ -67,17 +70,6 @@
   with_items:
     - monitor-output.service
     - capture-output.service
-
-- name: Copy nginx config
-  copy:
-    src: soma_monout.conf
-    dest: /etc/nginx/sites-enabled/soma_monout.conf
-
-- name: Reload service nginx
-  service:
-    name: nginx
-    state: reloaded
-
 - name: Change GPU memory size to 128
   command: raspi-config nonint do_memory_split 128
   become: yes
